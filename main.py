@@ -1,5 +1,3 @@
-# /itsm_agent/main.py
-
 import logging
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
