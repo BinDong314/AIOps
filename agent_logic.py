@@ -64,7 +64,7 @@ def query_stardust(ticket_id: str) -> Dict:
 
 def setup_agent() -> AgentExecutor:
     """Creates and returns the LangChain agent and executor."""
-    logging.info("Setting up ITSM agent...")
+    logging.info("Setting up AIOps agent...")
 
     tools = [get_procedure_suggestion, query_esdb, query_stardust]
 
@@ -72,10 +72,10 @@ def setup_agent() -> AgentExecutor:
     prompt = hub.pull("hwchase17/react")
 
     llm = ChatOpenAI(
-        model=settings.OPENAI_MODEL_NAME,
+        model=settings.LLM_MODEL_NAME,
         temperature=0,
-        openai_api_base=settings.OPENAI_API_BASE,
-        openai_api_key=settings.OPENAI_API_KEY,
+        openai_api_base=settings.LLM_API_BASE,
+        openai_api_key=settings.LLM_API_KEY
     )
 
     agent = create_react_agent(llm, tools, prompt)

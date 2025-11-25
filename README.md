@@ -13,14 +13,14 @@ The agent is built using LangChain and is exposed via a FastAPI server, providin
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repo-url>
-    cd itsm_agent
+    git clone https://github.com/BinDong314/AIOps
+    cd AIOps
     ```
 
 2.  **Create a virtual environment:**
     ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    python3.10 -m venv .venv
+    source .venv/bin/activate  # On Windows, use `venv\Scripts\activate`
     ```
 
 3.  **Install dependencies:**
@@ -31,7 +31,7 @@ The agent is built using LangChain and is exposed via a FastAPI server, providin
 4.  **Configure environment variables:**
     -   Copy the example `.env.example` file to `.env`:
         ```bash
-        cp .env.example .env
+        cp env.example .env
         ```
     -   Edit the `.env` file and add your `OPENAI_API_KEY`.
 

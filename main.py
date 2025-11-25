@@ -9,8 +9,8 @@ from models import AgentRequest, OpenAIChatRequest
 
 # --- App Initialization ---
 app = FastAPI(
-    title="ITSM AI Agent",
-    description="An AI agent for summarizing and suggesting procedures for IT tickets.",
+    title="AIOps Agent",
+    description="An AI agent for summarizing and suggesting procedures for NOC tickets.",
     version="1.0.0"
 )
 
@@ -21,7 +21,7 @@ agent_executor = setup_agent()
 
 @app.get("/")
 def read_root():
-    return {"status": "ITSM AI Agent is running."}
+    return {"status": "AIOps Agent is running."}
 
 
 # --- Endpoint 1: Direct API for Programmatic Access (e.g., ServiceNow) ---
