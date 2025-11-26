@@ -54,3 +54,45 @@ curl -X POST "http://127.0.0.1:8000/invoke" \
 -d '{
   "prompt": "Give me procedure suggestions for ticket TKT-56789"
 }'
+```
+![alt text](pics/curl-output.png)
+
+
+### 2. How to connect with LibreChat
+See doc to install LibreChat here https://www.librechat.ai/docs/quick_start/local_setup
+
+How to build the Custom Endpoints, follow the instruction here.
+When you have the librechat.yaml file, add below to your librechat.yaml
+
+```bash
+version: 1.2.8
+cache: true
+endpoints:
+  custom:
+    - name: "NOC AI Assistant Agent"          # This is the name that will appear in the UI dropdown.
+      apiKey: "dddd"   # We'll set this to a placeholder in the .env file.
+      baseURL: "http://host.docker.internal:8000/v1" # The crucial URL to your agent.
+      models:
+        default: ["NOC AIOps"]   # The "model name" your agent represents.
+        fetch: false                    # Set to false because our simple agent does not have a /v1/models endpoint to list models.
+      titleConvo: true                  # Allows the agent to set the conversation title.
+      titleModel: "current_model"       # Uses the agent itself to generate the title.
+      summarize: false                  # You can turn this on later if needed.
+      summaryModel: "current_model"
+      forcePrompt: false                # Our agent doesn't need a special system prompt.
+      modelDisplayLabel: "NOC AI Assistant Agent"   # A friendly label in the UI.
+
+```
+Then, do shutdown and restart Librechat container (restart does not work)
+```bash
+docker compose down
+docker compose up -d
+```
+![alt text](pics/librechat-output.png)
+
+### 2. How to connect with python
+
+```bash
+python api-client.py 1000
+```
+![alt text](pics/python-output.png)

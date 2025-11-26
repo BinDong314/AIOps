@@ -15,4 +15,5 @@ class ChatMessage(BaseModel):
 class OpenAIChatRequest(BaseModel):
     model: str
     messages: List[ChatMessage]
+    stream: Optional[bool] = False
     # Add other OpenAI params as needed, e.g., temperature, stream

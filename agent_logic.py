@@ -7,6 +7,7 @@ from langchain.tools import tool
 from langchain_openai import ChatOpenAI
 from langchain import hub
 from langchain.agents import create_react_agent, AgentExecutor
+import json
 
 from config import settings
 
@@ -17,16 +18,15 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # --- DEFINE TOOLS FOR THE AGENT ---
 
 @tool
-def get_snow_ticket_info(ticket_id: str) -> Dict[str, Any]:
+def get_snow_ticket_info(ticket_id: str) -> str: # <-- Return type is now str
     """
     This should always be the first step. It queries ServiceNow to get the initial, structured
     details of a ticket, such as the user, a summary of the problem, and the primary
     affected configuration item (CI) like a router or server name.
     """
     logging.info(f"TOOL: Querying ServiceNow for ticket '{ticket_id}'...")
-    # --- IMPLEMENTATION LOGIC HERE ---
-    # In a real scenario, you would query the ServiceNow API.
-    return {
+    
+    ticket_data = {
         "ticket_id": ticket_id,
         "caller": "David B.",
         "short_description": "High latency and packet loss to core router cr5.lbnl.gov",
@@ -34,6 +34,8 @@ def get_snow_ticket_info(ticket_id: str) -> Dict[str, Any]:
         "priority": "2 - High",
         "description": "User reports that connections routing through cr5.lbnl.gov have been experiencing high latency (200ms+) and intermittent packet loss since 14:00 today."
     }
+    # Convert the dictionary to a nicely formatted JSON string before returning
+    return json.dumps(ticket_data, indent=2)
 
 @tool
 def rag_search_wiki(query: str) -> str:
@@ -69,7 +71,7 @@ def query_esdb_data(query: str) -> str:
     return f"Placeholder: ESDB data for query '{query}'. Example: 'Latency for cr5.lbnl.gov spiked to 210ms at 14:05. No packet loss detected. Firewall logs show no anomalous drops.'"
 
 @tool
-def query_stardust_data(device_name: str) -> Dict[str, Any]:
+def query_stardust_data(device_name: str) -> str: # <-- Return type is now str
     """
     Queries Stardust for system monitoring and hardware status of a specific network device.
     Use this to get real-time information like SNMP data, including CPU utilization, memory usage,
@@ -77,8 +79,8 @@ def query_stardust_data(device_name: str) -> Dict[str, Any]:
     The input must be a device name (e.g., 'cr5.lbnl.gov').
     """
     logging.info(f"TOOL: Querying Stardust for device '{device_name}'...")
-    # --- IMPLEMENTATION LOGIC HERE ---
-    return {
+    
+    stardust_data = {
         "device": device_name,
         "cpu_utilization_percent": 85.5,
         "memory_utilization_percent": 70.1,
@@ -88,6 +90,8 @@ def query_stardust_data(device_name: str) -> Dict[str, Any]:
         },
         "comment": "CPU utilization is abnormally high."
     }
+    # Convert the dictionary to a nicely formatted JSON string before returning
+    return json.dumps(stardust_data, indent=2)
 
 def setup_agent() -> AgentExecutor:
     """Creates and returns the LangChain agent and executor."""
