@@ -33,7 +33,15 @@ The agent is built using LangChain and is exposed via a FastAPI server, providin
         ```bash
         cp env.example .env
         ```
-    -   Edit the `.env` file and add your `OPENAI_API_KEY`.
+    -   Edit the `.env` file and add your `API_KEY` and others.
+
+```bash
+    LLM_API_BASE="https://api.cborg.lbl.gov"
+    LLM_MODEL_NAME="lbl/cborg-chat"
+    LLM_API_KEY="...."
+```
+
+    PS: CBorg API key can be easily obtained here at [API Key Request Page](https://cborg.lbl.gov/api_request/)
 
 5.  **Run the server:**
     ```bash
@@ -59,10 +67,11 @@ curl -X POST "http://127.0.0.1:8000/invoke" \
 
 
 ### 2. How to connect with LibreChat
-See doc to install LibreChat here https://www.librechat.ai/docs/quick_start/local_setup
+2.1, install LibreChat, follow the [Local Setup Page](https://www.librechat.ai/docs/quick_start/local_setup)
 
-How to build the Custom Endpoints, follow the instruction here.
-When you have the librechat.yaml file, add below to your librechat.yaml
+2.2, add our app as Endpoint, follow the [Custom Endpoints Page](https://www.librechat.ai/docs/quick_start/custom_endpoints)
+
+When you have the *librechat.yaml* file, add below to your librechat.yaml
 
 ```bash
 version: 1.2.8
@@ -88,10 +97,11 @@ Then, do shutdown and restart Librechat container (restart does not work)
 docker compose down
 docker compose up -d
 ```
+Open Librechat http://localhost:3080/ and Select `NOC AIOps` to use it
 ![alt text](pics/librechat-output.png)
 
 ### 2. How to connect with python
-
+Run below example python code
 ```bash
 python api-client.py 1000
 ```
