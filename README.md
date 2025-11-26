@@ -41,7 +41,7 @@ The agent is built using LangChain and is exposed via a FastAPI server, providin
     LLM_API_KEY="...."
 ```
 
-    PS: CBorg API key can be easily obtained here at [API Key Request Page](https://cborg.lbl.gov/api_request/)
+PS: CBorg API key can be easily obtained here at [API Key Request](https://cborg.lbl.gov/api_request/)
 
 5.  **Run the server:**
     ```bash
